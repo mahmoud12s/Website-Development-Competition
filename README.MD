@@ -6,6 +6,7 @@ This is a full-stack e-commerce web application designed for selling electronics
 
 ## Tech Stack
 
+* Frontend : React
 * Backend: Node.js and Express
 * Database: MongoDB
 * Security: Helmet, express-rate-limit, express-session

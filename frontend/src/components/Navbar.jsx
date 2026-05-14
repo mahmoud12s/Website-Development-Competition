@@ -13,11 +13,9 @@ export default function Navbar() {
       <div className="navbar-inner">
         <Link to="/" className="navbar-logo">mahmoud cell</Link>
 
-        {/* Cart icon — always visible on mobile (top-right) */}
+        {/* Actions: search icon + cart — always visible */}
         <div className="navbar-actions">
-          <div className="navbar-search-desktop">
-            <SearchBar />
-          </div>
+          <SearchBar />
           <button className="cart-icon" onClick={() => navigate('/cart')} aria-label="Cart">
             <i className="fas fa-shopping-cart"></i>
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
@@ -31,11 +29,8 @@ export default function Navbar() {
         </button>
 
         <ul className={`navbar-links ${menuOpen ? 'open' : ''}`}>
-          {/* Search bar inside mobile menu */}
-          <li className="navbar-search-mobile">
-            <SearchBar />
-          </li>
           <li><NavLink to="/" onClick={() => setMenuOpen(false)}>Home</NavLink></li>
+          <li><NavLink to="/categories" onClick={() => setMenuOpen(false)}>Categories</NavLink></li>
           <li><NavLink to="/about" onClick={() => setMenuOpen(false)}>About</NavLink></li>
           <li><NavLink to="/contact" onClick={() => setMenuOpen(false)}>Contact</NavLink></li>
         </ul>

@@ -11,6 +11,7 @@ export default function Footer() {
         <div className="footer-section">
           <h3>Quick Links</h3>
           <Link to="/">Home</Link>
+          <Link to="/categories">Categories</Link>
           <Link to="/about">About Us</Link>
           <Link to="/contact">Contact Us</Link>
           <Link to="/cart">My Cart</Link>

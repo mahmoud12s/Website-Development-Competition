@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import Categories from './pages/Categories';
 import Category from './pages/Category';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
@@ -52,6 +53,7 @@ export default function App() {
         <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
         <Route path="/about" element={<><Navbar /><About /><Footer /></>} />
         <Route path="/contact" element={<><Navbar /><Contact /><Footer /></>} />
+        <Route path="/categories" element={<><Navbar /><Categories /><Footer /></>} />
         <Route path="/category/:slug" element={<><Navbar /><Category /><Footer /></>} />
         <Route path="/product/:slug" element={<><Navbar /><ProductDetail /><Footer /></>} />
         <Route path="/cart" element={<><Navbar /><Cart /><Footer /></>} />

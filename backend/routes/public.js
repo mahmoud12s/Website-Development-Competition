@@ -5,6 +5,7 @@ const Product = require('../models/Product');
 const Order = require('../models/Order');
 const Visit = require('../models/Visit');
 const ContactMessage = require('../models/ContactMessage');
+const { sendOrderConfirmation } = require('../utils/mailer');
 
 // import all cat
 router.get('/categories', async (req, res) => {
@@ -19,7 +20,7 @@ router.get('/categories', async (req, res) => {
 // import all product
 router.get('/products', async (req, res) => {
   try {
-    const { q, category, featured, sort = '-createdAt', page = 1, limit = 20 } = req.query;
+    const { q, category, featured, minPrice, maxPrice, sort = '-createdAt', page = 1, limit = 20 } = req.query;
     const filter = {};
 
     if (q) {
@@ -33,6 +34,16 @@ router.get('/products', async (req, res) => {
       if (cat) filter.category = cat._id;
     }
     if (featured === 'true') filter.featured = true;
+
+    // Price range filter
+    const priceFilter = {};
+    if (minPrice !== undefined && minPrice !== '' && !isNaN(Number(minPrice))) {
+      priceFilter.$gte = Number(minPrice);
+    }
+    if (maxPrice !== undefined && maxPrice !== '' && !isNaN(Number(maxPrice))) {
+      priceFilter.$lte = Number(maxPrice);
+    }
+    if (Object.keys(priceFilter).length) filter.price = priceFilter;
 
     const total = await Product.countDocuments(filter);
     const products = await Product.find(filter)
@@ -109,6 +120,9 @@ router.post('/orders', async (req, res) => {
       total
     });
     await order.save();
+
+    // Fire-and-forget order confirmation email — never block the order response
+    sendOrderConfirmation(order).catch(err => console.error('Order email failed:', err.message));
 
     res.status(201).json({
       message: 'Order placed successfully!',
